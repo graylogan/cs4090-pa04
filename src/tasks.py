@@ -142,12 +142,12 @@ def mark_all_tasks(tasks: list, complete: bool = True) -> None:
     for task in tasks:
         task["completed"] = complete
 
-def update_task(task, task_title, task_description, task_priority, task_category, task_due_date):
+def update_task(task, task_title, task_description, task_priority, task_category, task_due_date: datetime.date):
     task["title"] = task_title
     task["description"] = task_description
     task["priority"] = task_priority
     task["category"] = task_category
-    task["due_date"] = task_due_date
+    task["due_date"] = task_due_date.strftime("%Y-%m-%d")
 
 def sort_tasks(tasks, sort_by: str) -> None:
     if sort_by == "Due Date":

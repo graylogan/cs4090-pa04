@@ -6,6 +6,7 @@ import os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 import copy
+from datetime import datetime
 import src.tasks as tsks
 
 
@@ -46,19 +47,21 @@ def test_update_task():
 
     # test updating with same values does not change
     task_copy = copy.deepcopy(task)
+    date_obj = datetime.strptime(task_copy["due_date"], "%Y-%m-%d").date()
     tsks.update_task(
         task_copy,
         task_copy["title"],
         task_copy["description"],
         task_copy["priority"],
         task_copy["category"],
-        task_copy["due_date"],
+        date_obj
     )
     assert task_copy == task
 
     # test updated values change
+    date_obj = datetime.strptime("2025-05-10", "%Y-%m-%d").date()
     tsks.update_task(
-        task, "Travel to Store", "Buy eggs and butter", "High", "Work", "2025-05-10"
+        task, "Travel to Store", "Buy eggs and butter", "High", "Work", date_obj
     )
     assert task == {
         "id": 2,
